@@ -116,6 +116,46 @@ export const mapo = defineChain({
   },
 });
 
+export const Combo = defineChain({
+  id: 9980,
+  name: "Combo Mainnet",
+  network: "Combo Mainnet",
+  nativeCurrency: {
+    decimals: 18,
+    name: "BNB",
+    symbol: "BNB",
+  },
+  rpcUrls: {
+    default: {
+      http: ["https://rpc.combonetwork.io"],
+    },
+    public: {
+      http: ["https://rpc.combonetwork.io"],
+    },
+  },
+  blockExplorers: {
+    default: { name: "Explorer", url: "https://combonetwork.io/" },
+  },
+});
+export const WEMIX = defineChain({
+  id: 1111,
+  name: 'WEMIX3.0 Mainnet',
+  network: 'WEMIX',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'WEMIX',
+    symbol: 'WEMIX',
+  },
+  rpcUrls: {
+    default: { http: ['https://api.wemix.com'] },
+    public: { http: ['https://api.wemix.com'] },
+  },
+  blockExplorers: {
+    etherscan: { name: 'WEMIX', url: 'https://explorer.wemix.com' },
+    default: { name: 'WEMIX', url: 'https://explorer.wemix.com' },
+  },
+});
+
 export const inscriptionChains = {
   eth: mainnet,
   bsc,
@@ -147,6 +187,8 @@ export const inscriptionChains = {
   filecoin,
   shibarium,
   sepolia,
+  WEMIX,
+  Combo
 };
 
 export type ChainKey = keyof typeof inscriptionChains;
