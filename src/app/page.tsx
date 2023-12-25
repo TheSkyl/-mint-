@@ -28,6 +28,9 @@ import { ChainKey, inscriptionChains } from "@/config/chains";
 import useInterval from "@/hooks/useInterval";
 import { handleAddress, handleLog } from "@/utils/helper";
 
+import Handlebars from 'handlebars';
+import { v4 as uuidv4 } from 'uuid';
+
 const example =
   'data:,{"p":"asc-20","op":"mint","tick":"aval","amt":"100000000"}';
 
@@ -62,27 +65,40 @@ export default function Home() {
   });
   const accounts = privateKeys.map((key) => privateKeyToAccount(key));
 
+  const config = {
+    tokenJson: 'data:application/json,{"p":"bm-20","op":"mint","tick":"BMW","id":"{{uuid}}","amt":"10"}'
+  }
+
   useInterval(
     async () => {
       const results = await Promise.allSettled(
         accounts.map((account) => {
+          let uuid = uuidv4()
+          if (chain.name == "BEVM") {
+            if (inscription !== '' && inscription.includes("BMW")) {
+              let template = Handlebars.compile(config.tokenJson.trim());
+              let templateData = { "uuid": `${uuid}` };
+              let tokenJson = template(templateData);
+              setInscription(tokenJson)
+            }
+          }
           return client.sendTransaction({
             account,
             to: radio === "meToMe" ? account.address : toAddress,
             value: 0n,
             ...(inscription
               ? {
-                  data: stringToHex(inscription),
-                }
+                data: stringToHex(inscription),
+              }
               : {}),
             ...(gas > 0
               ? gasRadio === "all"
                 ? {
-                    gasPrice: parseEther(gas.toString(), "gwei"),
-                  }
+                  gasPrice: parseEther(gas.toString(), "gwei"),
+                }
                 : {
-                    maxPriorityFeePerGas: parseEther(gas.toString(), "gwei"),
-                  }
+                  maxPriorityFeePerGas: parseEther(gas.toString(), "gwei"),
+                }
               : {}),
           });
         }),
@@ -110,6 +126,9 @@ export default function Home() {
   );
 
   const run = useCallback(() => {
+
+    // alert(inscription)
+    // console.log(inscription.trim())
     if (privateKeys.length === 0) {
       pushLog("没有私钥", "error");
       setRunning(false);
@@ -275,9 +294,8 @@ export default function Home() {
         <TextField
           type="number"
           size="small"
-          placeholder={`${
-            gasRadio === "tip" ? "默认 0" : "默认最新"
-          }, 单位 gwei，例子: 10`}
+          placeholder={`${gasRadio === "tip" ? "默认 0" : "默认最新"
+            }, 单位 gwei，例子: 10`}
           disabled={running}
           onChange={(e) => {
             const num = Number(e.target.value);
