@@ -95,7 +95,7 @@ export default function Home() {
     }
   }
 
-  //返回指定值
+  //返回指定的值
   const specifyidnum = () => {
     let idnum = idlist[listIndexRef.current]; //可以打的id数量
     listIndexRef.current += 1;
