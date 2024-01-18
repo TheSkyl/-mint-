@@ -26,6 +26,7 @@ import {
   polygon,
   sepolia,
   zkSync,
+  bscTestnet
 } from "viem/chains";
 
 export const shibarium = defineChain({
@@ -137,24 +138,6 @@ export const Combo = defineChain({
     default: { name: "Explorer", url: "https://combonetwork.io/" },
   },
 });
-export const WEMIX = defineChain({
-  id: 1111,
-  name: 'WEMIX3.0 Mainnet',
-  network: 'WEMIX',
-  nativeCurrency: {
-    decimals: 18,
-    name: 'WEMIX',
-    symbol: 'WEMIX',
-  },
-  rpcUrls: {
-    default: { http: ['https://api.wemix.com'] },
-    public: { http: ['https://api.wemix.com'] },
-  },
-  blockExplorers: {
-    etherscan: { name: 'WEMIX', url: 'https://explorer.wemix.com' },
-    default: { name: 'WEMIX', url: 'https://explorer.wemix.com' },
-  },
-});
 
 export const BEVM = defineChain({
   id: 1501,
@@ -178,6 +161,7 @@ export const BEVM = defineChain({
   },
 });
 
+
 export const inscriptionChains = {
   eth: mainnet,
   bsc,
@@ -189,7 +173,6 @@ export const inscriptionChains = {
   arbitrum,
   optimism,
   base,
-  BEVM,
   zkSync,
   classic,
   meter,
@@ -210,8 +193,9 @@ export const inscriptionChains = {
   filecoin,
   shibarium,
   sepolia,
-  WEMIX,
-  Combo
+  Combo,
+  BEVM,
+  bscTestnet
 };
 
 export type ChainKey = keyof typeof inscriptionChains;

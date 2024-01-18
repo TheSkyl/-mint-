@@ -35,6 +35,7 @@ export default function ThemeRegister({ children, themeMode }: IAppProps) {
 
   const theme = useMemo(() => themeRegister(mode), [mode]);
 
+
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
